@@ -1,0 +1,58 @@
+---
+title: "6306_CaseStudy_1_a"
+author: "Mai Loan/Zackary Gill"
+date: "October 7, 2018"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+#read in the two .csv files
+beers <- read.csv("Beers.csv")
+brew <- read.csv("Breweries.csv")
+
+#1 - How many breweries are present in each state?
+table(brew$State)
+
+#2
+#Rename columns for merging
+beers2 <- rename(beers, Brew_ID = Brewery_id, BeerName = Name)
+#Merge by 'Brew_ID'
+df <- merge(brew, beers2, by = c("Brew_ID"), all=TRUE)
+#Rename the 'Name' column to BreweryName
+df <- rename(df, BreweryName = Name)
+#Print the first and last 6 items
+head(df, 6)
+tail(df, 6)
+
+#3 - Report the number of NA's in each column.
+colSums( is.na(df) )
+
+#4 - Compute the median alcohol content and international bitterness unit for each state.
+#  - Plot a bar chart to compare.
+group <- aggregate( df[,7:8], list(df$State), median)
+colnames(group) <- c("State", "MedianABV", "MedianIBU" )
+
+ggplot(data=group, aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+ggplot(data=group, aes(x=State, y = MedianIBU) ) + geom_bar(stat="identity")
+#IF WE WANT TO REMOVE THE NA ROWS
+#ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+#ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+
+#5
+df[which.max(df$ABV),][4]
+df[which.max(df$IBU),][4]
+
+#6
+summary(ABV)
+
+#7
+ggplot(data = df, aes(x = IBU, y = ABV)) + geom_point()
+#Yes there appears to a positive linear coorelation between the ABV and IBU
+
+
+```
+
+
+
