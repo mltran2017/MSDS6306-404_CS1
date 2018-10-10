@@ -1,59 +1,123 @@
 ---
-title: "6306_CaseStudy_1_a"
+title: "6306_CaseStudy_1"
 author: "Mai Loan/Zackary Gill"
-date: "October 7, 2018"
+date: "October 10, 2018"
 output: html_document
 ---
 
-```{r}
+```{r main, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#The libraries that are needed for this Case Study
 library(dplyr)
 library(ggplot2)
-#read in the two .csv files
+#library(expss)
+#library(RColorBrewer)
+
+#reads in the two .csv files
 beers <- read.csv("Beers.csv")
 brew <- read.csv("Breweries.csv")
+```
 
-#1 - How many breweries are present in each state?
-table(brew$State)
+###A Look at the Beers Brewed in the United States of America
+The number of breweries [Chart 1] in each state varies from 1 (DC, ND, SD, WV) to 47 (CO).
+```{r one, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#1
+#Creates a table of the unique values in brew$State and
+#the number of occurances for that value
+numBrewPerState <- table(brew$State)
+numBrewPerState
+```
+```Chart 1: Alphabetical list of the number of breweries present in each state/district```
 
+As an example of the contents of the data that was collected, below [Chart 2/3] are the first and last six rows of the datasets.
+```{r twoa, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #2
-#Rename columns for merging
+#Renames the columns Brewery_id to Brew_ID and Name to BeerName for merging
 beers2 <- rename(beers, Brew_ID = Brewery_id, BeerName = Name)
-#Merge by 'Brew_ID'
+#Merge the two data sets by 'Brew_ID'
 df <- merge(brew, beers2, by = c("Brew_ID"), all=TRUE)
-#Rename the 'Name' column to BreweryName
+#Renames the 'Name' column to BreweryName
 df <- rename(df, BreweryName = Name)
-#Print the first and last 6 items
-head(df, 6)
-tail(df, 6)
+#Print the first and last 6 items in the merged data.frame
+print( head(df, 6), row.names = FALSE)
+```
+```Chart 2: First six rows of the dataset```
+```{r twob, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+print(tail(df, 6), row.names = FALSE)
+```
+```Chart 3: Last six rows of the dataset```
 
+As seen below [Chart 4] the data that this analysis is being done on is not complete. Quite a few beers out of the 2410 contained in the datasetd are missing their Alcohol By Volume (ABV) and/or their International Bitterness Units (IBU) value.
+```{r three, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #3 - Report the number of NA's in each column.
+#Creates a T/F matrix of if item in the rows is NA, then sums up the number
 colSums( is.na(df) )
+```
+```Chart 4: Number of missing values per column```
 
-#4 - Compute the median alcohol content and international bitterness unit for each state.
-#  - Plot a bar chart to compare.
-group <- aggregate( df[,7:8], list(df$State), median)
+**THIS NEED TO BE FORMATTED AND SOMETHING NEEDS TO BE SAID HERE**
+```{r fourab, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#4
+#On columns 7-8 computes their median based on df$State
+group <- aggregate( df[,7:8], list(df$State), median, na.action = na.omit)
+#Renames the columns to their appropriate titles
 colnames(group) <- c("State", "MedianABV", "MedianIBU" )
 
-#Not removing the rows containing NA
-#ggplot(data=group, aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
-#ggplot(data=group, aes(x=State, y = MedianIBU) ) + geom_bar(stat="identity")
-#Removing the rows containing NA
-ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
-ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
-
-#5
-df[which.max(df$ABV),][4]
-df[which.max(df$IBU),][4]
-
-#6
-summary(df$ABV)
-
-#7
-ggplot(data = df, aes(x = IBU, y = ABV)) + geom_point()
-#Yes there appears to a positive linear coorelation between the ABV and IBU
-
-
+#Plots the data in two separate bar charts without including the NA rows
+ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + 
+  geom_bar(stat="identity")
+ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianIBU) ) + 
+  geom_bar(stat="identity")
 ```
+```PLOTS THAT NEED NAMES AND FORMATTING```
+
+As seen below [Chart 6] the state with the maximum ABV is CO, which is also the state [Chart 1] with the highest number of breweries. The state with the maximum IBU [Chart 6] is OR.
+```{r five, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#5
+#Gets the max ABV row and gives the state
+max.abv <- df[which.max(df$ABV),][4]
+#Gets the max IBU row and gives the state
+max.ibu <- df[which.max(df$IBU),][4]
+#Puts the two values into a new dataframe
+maxvals <- cbind(max.abv, max.ibu)
+#Sets the column names to be correct
+colnames(maxvals) <- c("Max_ABV", "Max_IBU")
+#Prints out the max ibu and max abv while getting rid of the row numbers
+print(maxvals, row.names = FALSE)
+```
+```Chart 6: State with the maximum ABV and maximum IBU```
+
+The number of values below [Chart 7] show that 50% of the beers have an ABV between 5% and 6.7% with the minimum and maximum being 0.1% and 12.8%.
+```{r six, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#6
+#Creates the summary of df$ABV
+summary(df$ABV)
+```
+```Chart 7: ABV summarized```
+
+Below [Chart 8] the black dotted line in the mean ABV at that value of IBU. The yellow shading is the standard deviation. There appears to be a positive coorelation between the ABV and IBU with there also being a maximum ABV value peaking out around 10% (with two outliers).
+```{r seven, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+#7
+#Creates a scatterplot of ABV vs IBU. Colors only the Y axis.
+#Centers the title
+#Sets the x and y labels
+#Sets the title of the chart
+#Sets how often the y ticks occur, what values the chart shows, and makes the labels a %
+#Sets how often the x ticks occur, and what values the chart shows
+#Sets the low/mid/high colors for the y axis, and sets the midpoint
+#Creates the mean line that goes through the chart
+ggplot(data = df, aes(x = IBU, y = ABV, color=ABV)) +
+  geom_point() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(x = "International Bitterness Units (IBU)", y = "Alcohol by Volume (ABV)") +
+  ggtitle("Alcohol By Volume vs International Bitterness Units of beer") +
+  scale_y_continuous(breaks=seq(0,0.2,0.02), limits = c(0.02, 0.125), labels = scales::percent) +
+  scale_x_continuous(breaks=seq(0,160,10), limits = c(0, 140)) +
+  scale_color_gradient2(low = "yellow3", mid = "pink", high = "maroon4", midpoint = 0.056, space = "Lab") +
+  geom_smooth(colour = "black", linetype = "dashed", fill="yellow")
+
+#Yes there appears to a positive linear coorelation between the ABV and IBU
+```
+```Chart 8: Alcohol By Volume vs International Bitterness Units of beer```
 
 
 
