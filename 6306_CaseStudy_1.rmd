@@ -34,18 +34,19 @@ colSums( is.na(df) )
 group <- aggregate( df[,7:8], list(df$State), median)
 colnames(group) <- c("State", "MedianABV", "MedianIBU" )
 
-ggplot(data=group, aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
-ggplot(data=group, aes(x=State, y = MedianIBU) ) + geom_bar(stat="identity")
-#IF WE WANT TO REMOVE THE NA ROWS
-#ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
-#ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+#Not removing the rows containing NA
+#ggplot(data=group, aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+#ggplot(data=group, aes(x=State, y = MedianIBU) ) + geom_bar(stat="identity")
+#Removing the rows containing NA
+ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
+ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianABV) ) + geom_bar(stat="identity")
 
 #5
 df[which.max(df$ABV),][4]
 df[which.max(df$IBU),][4]
 
 #6
-summary(ABV)
+summary(df$ABV)
 
 #7
 ggplot(data = df, aes(x = IBU, y = ABV)) + geom_point()
