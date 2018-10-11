@@ -49,6 +49,9 @@ print(tail(df, 6), row.names = FALSE)
 As seen below [Chart 4] the data that this analysis is being done on is not complete. Quite a few beers out of the 2410 contained in the datasetd are missing their Alcohol By Volume (ABV) and/or their International Bitterness Units (IBU) value.
 ```{r three, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #3 - Report the number of NA's in each column.
+#Some of the values in the Style column are blank but not NA,
+#so we will make them NA so they are treated equally
+df$Style[df$Style == ""] <- NA
 #Creates a T/F matrix of if item in the rows is NA, then sums up the number
 colSums( is.na(df) )
 ```
