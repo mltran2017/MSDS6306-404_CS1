@@ -1,130 +1,137 @@
 ---
 title: "6306_CaseStudy_1"
-author: "Mai Loan/Zackary Gill"
+author: "Mai Loan Tran/Zackary Gill"
 date: "October 10, 2018"
 output: html_document
 ---
 
-```{r main, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#The libraries that are needed for this Case Study
+#Introduction
+
+##We have been asked to help Budweiser identify which cities should host events for breweries.
+
+##The provided datasets contain two lists of 2410 US craft beers across 558 US breweries consisting of the style of beer, ABV (Alcohol by Volume), IBU (International Bitterness Units), and the brewery's city and state.
+
+
+```{r main, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
+###The R libraries used are:
 library(dplyr)
 library(ggplot2)
-#library(expss)
-#library(RColorBrewer)
 
-#reads in the two .csv files
+###Reads in the two .csv files
 beers <- read.csv("Beers.csv")
 brew <- read.csv("Breweries.csv")
 ```
 
-###A Look at the Beers Brewed in the United States of America
-The number of breweries [Chart 1] in each state varies from 1 (DC, ND, SD, WV) to 47 (CO).
-```{r one, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#1
-#Creates a table of the unique values in brew$State and
-#the number of occurances for that value
+#Question 1 
+##Chart 1 quantifies the varying number of breweries in each state from 1 (DC, ND, SD, WV) to 47 (CO).
+```{r one, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
+###Creates a table of the unique values in brew$State and the number of occurances for that value
 numBrewPerState <- table(brew$State)
 numBrewPerState
 ```
 ```Chart 1: Alphabetical list of the number of breweries present in each state/district```
 
-As an example of the contents of the data that was collected, below [Chart 2/3] are the first and last six rows of the datasets.
-```{r twoa, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#2
-#Renames the columns Brewery_id to Brew_ID and Name to BeerName for merging
+#Question 2 
+##The merge of the two datasets are validated with the first and last six (6) observations in Chart 2 and 3.
+```{r twoa, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
+
+###Renames the columns Brewery_id to Brew_ID and Name to BeerName for merging
 beers2 <- rename(beers, Brew_ID = Brewery_id, BeerName = Name)
-#Merge the two data sets by 'Brew_ID'
+###Merges the two data sets by 'Brew_ID'
 df <- merge(brew, beers2, by = c("Brew_ID"), all=TRUE)
-#Renames the 'Name' column to BreweryName
+###Renames the 'Name' column to BreweryName
 df <- rename(df, BreweryName = Name)
-#Remove spaces from around the state abbreviations
+###Removes spaces from around the state abbreviations
 df$State <- gsub("[ ]*", "", df$State)
-#Print the first and last 6 items in the merged data.frame
+###Prints the first and last 6 items in the merged data.frame
 print( head(df, 6), row.names = FALSE)
 ```
 ```Chart 2: First six rows of the dataset```
-```{r twob, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
+```{r twob, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
 print(tail(df, 6), row.names = FALSE)
 ```
 ```Chart 3: Last six rows of the dataset```
 
-As seen below [Chart 4] the data that this analysis is being done on is not complete. Quite a few beers out of the 2410 contained in the datasetd are missing their Alcohol By Volume (ABV) and/or their International Bitterness Units (IBU) value.
-```{r three, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#3 - Report the number of NA's in each column.
-#Some of the values in the Style column are blank but not NA,
-#so we will make them NA so they are treated equally
+#Question 3 
+##Chart 4 reports the number of NA's in each column because the data analysis yielded incomplete values. 
+##Of the 2410 beers contained in the dataset, 62 beers have missing ABV and 1005 have missing IBU values. There were 5 beers where the Style values were blank but not NA, although we will treat them as NA.
+```{r three, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
 df$Style[df$Style == ""] <- NA
-#Creates a T/F matrix of if item in the rows is NA, then sums up the number
+###Creates a True/False matrix of the rows have an NA value, then sums up the number
 colSums( is.na(df) )
 ```
-```Chart 4: Number of missing values per column```
+```Chart 4: Number of NA values per column```
 
-**THIS NEED TO BE FORMATTED AND SOMETHING NEEDS TO BE SAID HERE**
-```{r fourab, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#4
-#On columns 7-8 computes their median based on df$State
+#Question 4 
+##Chart 5 and 6 plots the computed median alcohol content and international bitterness for each state.
+```{r foura, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
+###Medians computed in columns 7 and 8 based on df$State
 group <- df %>% group_by(State) %>% summarise(MedianABV = median(ABV, na.rm=T), MedianIBU = median(IBU, na.rm=T)) %>% as.data.frame()
-
-#Plots the data in two separate bar charts without including the NA rows
+###Plots the data in two separate bar charts excluding the NA rows
 ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + 
   geom_bar(stat="identity") +
-  theme(axis.text.x = element_text(size=6)) +
+    theme(axis.text.x = element_text(size=6)) +
   scale_y_continuous(breaks=seq(0,0.07,0.005), labels = scales::percent) +
   coord_cartesian(ylim=c(0.035, 0.065))
+```
+```Chart 5: Median ABV by State```
+```{r fourb, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
 ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianIBU) ) + 
   geom_bar(stat="identity") +
   theme(axis.text.x = element_text(size=6))
 ```
-```PLOTS THAT NEED NAMES AND FORMATTING```
+```Chart 6: Median IBU by State```
 
-As seen below [Chart 6] the state with the maximum ABV is CO, which is also the state [Chart 1] with the highest number of breweries. The state with the maximum IBU [Chart 6] is OR.
-```{r five, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#5
-#Gets the max ABV row and gives the state
+#Question 5 
+##Chart 7 identifies Colorado as the state with the maximum ABV and Oregon as the state with the maximum IBU.
+```{r five, echo=TRUE, warning=FALSE, message=FALSE, comment=NA}
+###Gets the max ABV row and gives the state
 max.abv <- df[which.max(df$ABV),][4]
-#Gets the max IBU row and gives the state
+###Gets the max IBU row and gives the state
 max.ibu <- df[which.max(df$IBU),][4]
-#Puts the two values into a new dataframe
+###Puts the two values into a new dataframe
 maxvals <- cbind(max.abv, max.ibu)
-#Sets the column names to be correct
+###Sets the column names to be correct
 colnames(maxvals) <- c("Max_ABV", "Max_IBU")
-#Prints out the max ibu and max abv while getting rid of the row numbers
+###Prints out the max ibu and max abv while getting rid of the row numbers
 print(maxvals, row.names = FALSE)
 ```
-```Chart 6: State with the maximum ABV and maximum IBU```
+```Chart 7: State with the maximum ABV and maximum IBU```
 
-The number of values below [Chart 7] show that 50% of the beers have an ABV between 5% and 6.7% with the minimum and maximum being 0.1% and 12.8%.
+#Question 6 
+##Chart 8 summarizes the statistics for the ABV variable and shows that 50% of the beers have an ABV between 5% and 6.7% with the minimum and maximum being 0.1% and 12.8%.
 ```{r six, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#6
-#Creates the summary of df$ABV
+###Creates the summary of df$ABV
 summary(df$ABV)
 ```
-```Chart 7: ABV summarized```
+```Chart 8: ABV Summary```
 
-Below [Chart 8] the black dotted line in the mean ABV at that value of IBU. The yellow shading is the standard deviation. There appears to be a positive coorelation between the ABV and IBU with there also being a maximum ABV value peaking out around 10% (with two outliers).
+#Question 7 
+##Chart 9 reflects an apparent positive relationship between IBU and ABV values.
+##The black dotted line is the mean ABV at that value of IBU. The yellow shading is the standard deviation. While there is positive correlation between the ABV and IBU with a maximum ABV value peaking out around 10%, there are two outliers that warrant further examination for inclusion or exclusion depending on additional questions of interest.
 ```{r seven, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
-#7
-#Creates a scatterplot of ABV vs IBU. Colors only the Y axis.
-#Centers the title
-#Sets the x and y labels
-#Sets the title of the chart
-#Sets how often the y ticks occur, what values the chart shows, and makes the labels a %
-#Sets how often the x ticks occur, and what values the chart shows
-#Sets the low/mid/high colors for the y axis, and sets the midpoint
-#Creates the mean line that goes through the chart
+###Creates a scatterplot of ABV vs IBU. Colors only the Y axis.
+###Centers the title
+###Sets the x and y labels
+###Sets the title of the chart
+###Sets how often the y ticks occur, what values the chart shows, and makes the labels a %
+###Sets how often the x ticks occur, and what values the chart shows
+###Sets the low/mid/high colors for the y axis, and sets the midpoint
+###Creates the mean line that goes through the chart
 ggplot(data = df, aes(x = IBU, y = ABV, color=ABV)) +
   geom_point() +
   theme(plot.title = element_text(hjust = 0.5)) +
   labs(x = "International Bitterness Units (IBU)", y = "Alcohol by Volume (ABV)") +
-  ggtitle("Alcohol By Volume vs International Bitterness Units of beer") +
+  ggtitle("Alcohol By Volume vs International Bitterness Units of Beer") +
   scale_y_continuous(breaks=seq(0,0.2,0.02), limits = c(0.02, 0.125), labels = scales::percent) +
   scale_x_continuous(breaks=seq(0,160,10), limits = c(0, 140)) +
   scale_color_gradient2(low = "yellow3", mid = "pink", high = "maroon4", midpoint = 0.056, space = "Lab") +
   geom_smooth(colour = "black", linetype = "dashed", fill="yellow")
-
-#Yes there appears to a positive linear coorelation between the ABV and IBU
 ```
-```Chart 8: Alcohol By Volume vs International Bitterness Units of beer```
+```Chart 9: Alcohol By Volume vs International Bitterness Units of beer```
 
+#Conclusion
+## Our initial findings yielded that Colorado has the most breweries at 47 (8.42%) of the total 558 in the US whereas Washington DC, North Dakota, South Dakota, and West Virginia each have one. Of the 2410 beers in the provided dataset, there were 62 with missing ABV values and 1005 with missing IBU values but still showed an overall positive relationship between the two variables. Four of the states east of the Mississippi River have the highest median ABV above 6%, i.e. Washington DC, Kentucky, Michigan, West Virginia with only Colorado and New Mexico and Colorado west of the River above 6%. The latter with the maximum ABV at 12.8% among the 50% of the beers that have an ABV between 5% and 6.7%. Oregon holds the record for maximum IBU at 138.
 
+##While the analysis of this dataset yielded interesting insights about the 558 breweries' 2410 beers, we feel it fails to accurately answer the question of where the events should be hosted. It would be beneficial to collect and merge additional variables about the number of personnel per breweries and their job functions, number of retail alcohol establishments, city and state population, nearest major airports, etc.to better recommend the event locations fo maximum attendance and exposure.
 
