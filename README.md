@@ -1,9 +1,9 @@
 # MSDS6306-404_CS1
 Case Study 1
 
-Introduction
-Explain code
-Answer the Q's - Almost done, make it look better
-Explain findings
-Make github look nice
-Youtube video presentation - individual
+Introduction - DRAFTED
+Explain code - DONE
+Answer the Q's - DONE
+Explain findings - DONE
+Make github look nice - PENDING
+Youtube video presentation - individual - PENDING
