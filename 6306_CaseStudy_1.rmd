@@ -7,9 +7,9 @@ output: html_document
 
 ##Introduction
 
-####We have been asked to help Budweiser identify which cities should host events for breweries.
+#####We have been asked to help Budweiser identify which cities should host events for breweries.
 
-####The provided datasets contain two lists of 2410 US craft beers across 558 US breweries consisting of the style of beer, ABV (Alcohol by Volume), IBU (International Bitterness Units), and the brewery's city and state.
+#####The provided datasets contain two lists of 2410 US craft beers across 558 US breweries consisting of the style of beer, ABV (Alcohol by Volume), IBU (International Bitterness Units), and the brewery's city and state.
 
 #####Our exploration of the data identified the top 5 states with the most number of breweries to host events towards expansion of those existing markets. Alternatively, we identified 5 states with only one brewery each that could serve as opportunities into new markets. Another view of the data also suggests that events could be hosted in the 5 states with the most bitter beers to introduce beers that are less bitter.
 
@@ -30,7 +30,7 @@ brew <- read.csv("Breweries.csv")
 ```
 
 ###Question 1 
-####Chart 1 quantifies the varying number of breweries in each state from 1 (DC, ND, SD, WV) to 47 (CO).
+#####Chart 1 quantifies the varying number of breweries in each state from 1 (DC, ND, SD, WV) to 47 (CO).
 ```{r one, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Creates a table of the unique values in brew$State and the number of occurances for that value
 numBrewPerState <- as.data.frame(table(brew$State))
@@ -39,7 +39,7 @@ colnames(numBrewPerState) <- c("State", "Freq")
 #Creates the bar graph of the number of breweries per state
 ggplot(data=numBrewPerState, aes(x=State, y = Freq)) + 
   geom_histogram(stat="identity", col="black", aes(fill=Freq)) +
-  theme(axis.text.x = element_text(size=8,angle=90)) +
+  theme(axis.text.x = element_text(size=8,angle=90, vjust=0.5)) +
   xlab("State") + ylab("Number of Breweries per State") +
   scale_y_continuous( breaks=seq(0,50,5) ) +
   geom_text(size=2, aes(label=Freq), position=position_dodge(width=0.9), vjust=-0.25) +
@@ -48,7 +48,7 @@ ggplot(data=numBrewPerState, aes(x=State, y = Freq)) +
 ```Chart 1: Alphabetical list of the number of breweries present in each state/district```
 
 ###Question 2 
-####The merge of the two datasets are validated with the first and last six (6) observations in Chart 2 and 3.
+#####The merge of the two datasets are validated with the first and last six (6) observations in Chart 2 and 3.
 ```{r twoa, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Renames the columns Brewery_id to Brew_ID and Name to BeerName for merging
 beers2 <- rename(beers, Brew_ID = Brewery_id, BeerName = Name)
@@ -72,8 +72,8 @@ kable(tail(df, 6), row.names = FALSE) %>% kable_styling(bootstrap_options = "str
 ```Chart 3: Last six rows of the dataset```
 
 ###Question 3 
-####Chart 4 reports the number of NA's in each column because the data analysis yielded incomplete values. 
-####Of the 2410 beers contained in the dataset, 62 beers have missing ABV and 1005 have missing IBU values. There were 5 beers where the Style values were blank but not NA, although we will treat them as NA.
+#####Chart 4 reports the number of NA's in each column because the data analysis yielded incomplete values. 
+#####Of the 2410 beers contained in the dataset, 62 beers have missing ABV and 1005 have missing IBU values. There were 5 beers where the Style values were blank but not NA, although we will treat them as NA.
 ```{r three, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #There were 5 beers where the Style values were blank but not NA, although we will treat them as NA.
 df$Style[df$Style == ""] <- NA
@@ -87,14 +87,14 @@ kable(naPer) %>% kable_styling(bootstrap_options = "striped", full_width = F)
 ```Chart 4: Number of NA values per column```
 
 ###Question 4
-####Chart 5 and 6 plots the computed median alcohol content and international bitterness for each state.
+#####Chart 5 and 6 plots the computed median alcohol content and international bitterness for each state.
 ```{r foura, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Medians computed in columns 7 and 8 based on df$State
 group <- df %>% group_by(State) %>% summarise(MedianABV = median(ABV, na.rm=T), MedianIBU = median(IBU, na.rm=T)) %>% as.data.frame()
 #Plots the data in two separate bar charts excluding the NA rows
 ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + 
   geom_histogram(stat="identity", col="black", aes(fill=MedianABV)) +
-  theme(axis.text.x = element_text(size=8,angle=90)) +
+  theme(axis.text.x = element_text(size=8,angle=90, vjust=0.5)) +
   xlab("State") + ylab("Median Alcohol By Volume (ABV)") +
   scale_y_continuous(breaks=seq(0,0.07,0.005), labels = scales::percent) +
   geom_text(size=2, aes(label=MedianABV*100), position=position_dodge(width=0.9), vjust=-0.25) +
@@ -106,7 +106,7 @@ ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) +
 #Chart displaying the median IBU
 ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianIBU) ) + 
   geom_histogram(stat="identity", col="black", aes(fill=MedianIBU)) +
-  theme(axis.text.x = element_text(size=8,angle=90)) +
+  theme(axis.text.x = element_text(size=8,angle=90, vjust=0.5)) +
   xlab("State") + ylab("Median International Bitterness Units (IBU)") +
   scale_y_continuous(breaks=seq(0,65,5)) +
   geom_text(size=2, aes(label=MedianIBU), position=position_dodge(width=0.9), vjust=-0.25) +
@@ -116,7 +116,7 @@ ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianIBU) ) +
 ```Chart 6: Median IBU by State```
 
 ###Question 5 
-####Chart 7 identifies Colorado as the state with the maximum ABV and Oregon as the state with the maximum IBU.
+#####Chart 7 identifies Colorado as the state with the maximum ABV and Oregon as the state with the maximum IBU.
 ```{r five, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Gets the max ABV row and gives the state
 max.abv <- df[which.max(df$ABV),][4]
@@ -132,7 +132,7 @@ kable(maxvals, row.names=F) %>% kable_styling(bootstrap_options = "condensed", f
 ```Chart 7: State with the maximum ABV and maximum IBU```
 
 ###Question 6 
-####Chart 8 summarizes the statistics for the ABV variable and shows that 50% of the beers have an ABV between 5% and 6.7% with the minimum and maximum being 0.1% and 12.8%.
+#####Chart 8 summarizes the statistics for the ABV variable and shows that 50% of the beers have an ABV between 5% and 6.7% with the minimum and maximum being 0.1% and 12.8%.
 ```{r six, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Creates the summary of df$ABV
 sumABV <- summary(df$ABV)
@@ -144,8 +144,8 @@ kable( sumABV1, col.names = "" ) %>% kable_styling(bootstrap_options = "striped"
 ```Chart 8: ABV Summary```
 
 ###Question 7 
-####Chart 9 reflects an apparent positive relationship between IBU and ABV values.
-####The black dotted line is the mean ABV at that value of IBU. The yellow shading is the standard deviation. While there is positive correlation between the ABV and IBU with a maximum ABV value peaking out around 10%, there are two outliers that warrant further examination for inclusion or exclusion depending on additional questions of interest.
+#####Chart 9 reflects an apparent positive relationship between IBU and ABV values.
+#####The black dotted line is the mean ABV at that value of IBU. The yellow shading is the standard deviation. While there is positive correlation between the ABV and IBU with a maximum ABV value peaking out around 10%, there are two outliers that warrant further examination for inclusion or exclusion depending on additional questions of interest.
 ```{r seven, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Creates a scatterplot of ABV vs IBU. Colors only the Y axis.
 #Centers the title
@@ -168,5 +168,5 @@ ggplot(data = df, aes(x = IBU, y = ABV, color=ABV)) +
 ```Chart 9: Alcohol By Volume vs International Bitterness Units of beer```
 
 ##Conclusion
-####Of the 2410 beers in the provided dataset, we propose events to be hosted in the top 5 states with the most number of breweries, Colorado (47), California (39), Michigan (32), Oregon (29), Texas (28). As shown in Chart 1, this presents opportunties to expand services in those existing markets whereas Washington DC, South Dakota, North Dakota, and West Virgina with one brewery per state are locations with opportunities to grow those markets. For introduction of less bitter beers where the median IBU is above 51, we propose events be hosted in Maine (61), West Virginia (57.5), Florida (55), Georgia (55), and Delaware (52) as shown in Chart 5.
+#####Of the 2410 beers in the provided dataset, we propose events to be hosted in the top 5 states with the most number of breweries, Colorado (47), California (39), Michigan (32), Oregon (29), Texas (28). As shown in Chart 1, this presents opportunties to expand services in those existing markets whereas Washington DC, South Dakota, North Dakota, and West Virgina with one brewery per state are locations with opportunities to grow those markets. For introduction of less bitter beers where the median IBU is above 51, we propose events be hosted in Maine (61), West Virginia (57.5), Florida (55), Georgia (55), and Delaware (52) as shown in Chart 5.
 
