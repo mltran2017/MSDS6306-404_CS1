@@ -39,10 +39,10 @@ colnames(numBrewPerState) <- c("State", "Freq")
 #Creates the bar graph of the number of breweries per state
 ggplot(data=numBrewPerState, aes(x=State, y = Freq)) + 
   geom_histogram(stat="identity", col="black", aes(fill=Freq)) +
-  theme(axis.text.x = element_text(size=5)) +
+  theme(axis.text.x = element_text(size=8,angle=90)) +
   xlab("State") + ylab("Number of Breweries per State") +
   scale_y_continuous( breaks=seq(0,50,5) ) +
-  geom_text(size=2, aes(label=State), position=position_dodge(width=0.9), vjust=-0.25) +
+  geom_text(size=2, aes(label=Freq), position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_gradient2("Per State", low = "yellow3", mid="pink", high = "maroon4", midpoint=20)
 ```
 ```Chart 1: Alphabetical list of the number of breweries present in each state/district```
@@ -94,10 +94,10 @@ group <- df %>% group_by(State) %>% summarise(MedianABV = median(ABV, na.rm=T), 
 #Plots the data in two separate bar charts excluding the NA rows
 ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) + 
   geom_histogram(stat="identity", col="black", aes(fill=MedianABV)) +
-  theme(axis.text.x = element_text(size=5)) +
+  theme(axis.text.x = element_text(size=8,angle=90)) +
   xlab("State") + ylab("Median Alcohol By Volume (ABV)") +
   scale_y_continuous(breaks=seq(0,0.07,0.005), labels = scales::percent) +
-  geom_text(size=2, aes(label=State), position=position_dodge(width=0.9), vjust=-0.25) +
+  geom_text(size=2, aes(label=MedianABV*100), position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_gradient2("ABV", low = "yellow3", mid="pink", high = "maroon4", midpoint=0.05, limits=c(0.04,0.063)) +
   coord_cartesian(ylim=c(0.035, 0.065))
 ```
@@ -106,10 +106,10 @@ ggplot(data=subset(group, !is.na(MedianABV)), aes(x=State, y = MedianABV) ) +
 #Chart displaying the median IBU
 ggplot(data=subset(group, !is.na(MedianIBU)), aes(x=State, y = MedianIBU) ) + 
   geom_histogram(stat="identity", col="black", aes(fill=MedianIBU)) +
-  theme(axis.text.x = element_text(size=5)) +
+  theme(axis.text.x = element_text(size=8,angle=90)) +
   xlab("State") + ylab("Median International Bitterness Units (IBU)") +
   scale_y_continuous(breaks=seq(0,65,5)) +
-  geom_text(size=2, aes(label=State), position=position_dodge(width=0.9), vjust=-0.25) +
+  geom_text(size=2, aes(label=MedianIBU), position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_gradient2("IBU", low = "yellow3", mid="pink", high = "maroon4", midpoint=35) +
   coord_cartesian(ylim=c(15, 60))
 ```
