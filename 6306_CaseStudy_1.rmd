@@ -25,8 +25,8 @@ library(ggplot2)
 library(knitr)
 library(kableExtra)
 #Reads in the two .csv files
-beers <- read.csv("Beers.csv")
-brew <- read.csv("Breweries.csv")
+beers <- read.csv("./csv/Beers.csv")
+brew <- read.csv("./csv/Breweries.csv")
 ```
 
 ###Question 1 
