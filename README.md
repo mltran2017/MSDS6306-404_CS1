@@ -1,3 +1,38 @@
 # MSDS6306-404_CS1
+This is a probject analyzing the provided datasets which contain two lists of 2410 US craft beers across 558 US breweries.
 
-This repository consists of two datasets, one for domestic breweries and one for beers. It also contains a scope document and the R code and findings from the exploratory data analysis in both RMD and HTML format. 
+##csv
+This folder contains the .csv files that are use in the 6306_CaseStudy_1.rmd file.
+
+##csv/Beers.csv
+The beer dataset.
+
+##csv/Breweries.csv
+The brewery dataset.
+
+##instructions
+This folder contains the instructions for this assignment
+
+##instructions/Case Study 01.docx
+The instructions for this probject.
+
+##instructions/CaseStudy1Rubric.docx
+The grading rubric for this probject.
+
+##6306_CaseStudy_1.html
+The output from knitting the 6306_CaseStudy_1.rmd file.
+
+##6306_CaseStudy_1.rmd
+###Objects
+*beers*		The raw Beers.csv input.
+*brew*		The raw Breweries.csv input.
+*numBrewPerState*	A data frame of the number of breweries per state
+*beers2*		A temporary object equivelent to 'beers' with the columns renamed for merging
+*df*		The resulting dataframe from merging 'beers2' and 'brew'
+*naPer*		The number of NA's per column
+*group*		A data frame of the medians of 'df$IBU' and 'df$ABV' by 'df$State'
+*max.abv*	The state that contains the maximum ABV value
+*max.ibu*	The state that contains the maximum IBU value
+*maxvals*	Merges 'max.abv' and 'max.ibu'
+*sumABV*	The raw summary of 'df$ABV'
+*sumABV1*	sumABV converted to a data frame
