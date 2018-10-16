@@ -24,26 +24,26 @@ The output from knitting the 6306_CaseStudy_1.rmd file.
 
 ## 6306_CaseStudy_1.rmd
 ### Objects
-*beers*		The raw Beers.csv input.
+**_beers_**		The raw Beers.csv input.
 
-*brew*		The raw Breweries.csv input.
+**_brew_**		The raw Breweries.csv input.
 
-*numBrewPerState*	A data frame of the number of breweries per state
+**_numBrewPerState_**	A data frame of the number of breweries per state
 
-*beers2*		A temporary object equivelent to 'beers' with the columns renamed for merging
+**_beers2_**		A temporary object equivelent to 'beers' with the columns renamed for merging
 
-*df*		The resulting dataframe from merging 'beers2' and 'brew'
+**_df_**		The resulting dataframe from merging 'beers2' and 'brew'
 
-*naPer*		The number of NA's per column
+**_naPer_**		The number of NA's per column
 
-*group*		A data frame of the medians of 'df$IBU' and 'df$ABV' by 'df$State'
+**_group_**		A data frame of the medians of 'df$IBU' and 'df$ABV' by 'df$State'
 
-*max.abv*	The state that contains the maximum ABV value
+**_max.abv_**	The state that contains the maximum ABV value
 
-*max.ibu*	The state that contains the maximum IBU value
+**_max.ibu_**	The state that contains the maximum IBU value
 
-*maxvals*	Merges 'max.abv' and 'max.ibu'
+**_maxvals_**	Merges 'max.abv' and 'max.ibu'
 
-*sumABV*	The raw summary of 'df$ABV'
+**_sumABV_**	The raw summary of 'df$ABV'
 
-*sumABV1*	sumABV converted to a data frame
+**_sumABV1_**	sumABV converted to a data frame
