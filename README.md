@@ -1,7 +1,7 @@
 # MSDS6306-404_CS1
 This is a probject analyzing the provided datasets (Beers.csv and Breweries.csv) which contain two lists of 2410 US craft beers across 558 US breweries.
 
-## csv
+## csv/
 This folder contains the .csv files that are use in the 6306_CaseStudy_1.rmd file.
 
 ## csv/Beers.csv
@@ -10,7 +10,7 @@ The beer dataset.
 ## csv/Breweries.csv
 The brewery dataset.
 
-## instructions
+## instructions/
 This folder contains the instructions for this assignment
 
 ## instructions/Case Study 01.docx
