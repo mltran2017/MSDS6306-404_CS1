@@ -145,7 +145,7 @@ kable( sumABV1, col.names = "" ) %>% kable_styling(bootstrap_options = "striped"
 
 ###Question 7 
 #####Chart 9 reflects an apparent positive relationship between IBU and ABV values.
-#####The black dotted line is the mean ABV at that value of IBU. The yellow shading is the standard deviation. While there is positive correlation between the ABV and IBU with a maximum ABV value peaking out around 10%, there are two outliers that warrant further examination for inclusion or exclusion depending on additional questions of interest.
+#####The black dotted line is the mean ABV at that value of IBU. The yellow shading is the standard deviation. While there is positive correlation between the ABV and IBU with a maximum ABV value peaking out around 10%, there are two outliers that warrant further examination for inclusion or exclusion depending on additional questions of interest. When answering those specific additional questions we would want to use something like Pearson's r to gain an more precise answer.
 ```{r seven, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Creates a scatterplot of ABV vs IBU. Colors only the Y axis.
 #Centers the title
