@@ -1,17 +1,13 @@
 ---
 title: "Domestic Beers and Breweries"
 author: "Mai Loan Tran/Zackary Gill"
-date: "October 10, 2018"
+date: "October 16, 2018"
 output: html_document
 ---
 
 ##Introduction
 
-#####We have been asked to help Budweiser identify which cities should host events for breweries.
-
-#####The provided datasets contain two lists of 2410 US craft beers across 558 US breweries consisting of the style of beer, ABV (Alcohol by Volume), IBU (International Bitterness Units), and the brewery's city and state.
-
-#####Our exploration of the data identified the top 5 states with the most number of breweries to host events towards expansion of those existing markets. Alternatively, we identified 5 states with only one brewery each that could serve as opportunities into new markets. Another view of the data also suggests that events could be hosted in the 5 states with the most bitter beers to introduce beers that are less bitter.
+#####We have been asked to help Budweiser identify which states should host events for breweries. The two provided datasets contain lists of 2410 US craft beers across 558 US breweries consisting of the style of beer, ABV (Alcohol by Volume), IBU (International Bitterness Units), and the brewery's city and state. An analysis was done on this data in order to provide recommendations to the CEO and CFO of Budweiser. Before stating the recommendations, we will give an overview of the data analysis that is used to generate them.
 
 ```{r setup, include=FALSE}
 #Sets the width of the charts
@@ -168,5 +164,4 @@ ggplot(data = df, aes(x = IBU, y = ABV, color=ABV)) +
 ```Chart 9: Alcohol By Volume vs International Bitterness Units of beer```
 
 ##Conclusion
-#####Of the 2410 beers in the provided dataset, we propose events to be hosted in the top 5 states with the most number of breweries, Colorado (47), California (39), Michigan (32), Oregon (29), Texas (28). As shown in Chart 1, this presents opportunties to expand services in those existing markets whereas Washington DC, South Dakota, North Dakota, and West Virgina with one brewery per state are locations with opportunities to grow those markets. For introduction of less bitter beers where the median IBU is above 51, we propose events be hosted in Maine (61), West Virginia (57.5), Florida (55), Georgia (55), and Delaware (52) as shown in Chart 5.
-
+#####Based on the data above we have three recommendations. First we propose the events to be hosted in the states with the most number of breweries (Colorado [47], California [39], Michigan [32], Oregon [29], Texas [28]). As shown in Chart 1, this presents opportunities to expand services in those existing markets. The second recommendation is to host the events in the states that have the least amount of breweries (South Dakota [1], North Dakota [1], West Virgina [1]) which gives an opportunity to grow those markets. The final approach to the event selection is to host the events in the states that have the highest median IBU (Maine [61], West Virginia [57.5], Florida [55], Georgia [55], and Delaware [52]. See Chart 6.). There we will bring beer that has similar style/ABV to the local beers but with a lower IBU (tastes less bitter)  in order to gain market share.
