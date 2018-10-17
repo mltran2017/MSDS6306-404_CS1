@@ -41,7 +41,7 @@ ggplot(data=numBrewPerState, aes(x=State, y = Freq)) +
   geom_text(size=2, aes(label=Freq), position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_gradient2("Per State", low = "yellow3", mid="pink", high = "maroon4", midpoint=20)
 ```
-```Chart 1: Alphabetical list of the number of breweries present in each state/district```
+```Chart 1: Number of breweries by state```
 
 ###Question 2 
 #####The merge of the two datasets are validated with the first and last six (6) observations in Chart 2 and 3.
@@ -58,14 +58,14 @@ df$State <- gsub("[ ]*", "", df$State)
 kable(head(df,6)) %>% kable_styling(bootstrap_options = "striped")
 ```
 
-```Chart 2: First six rows of the dataset```
+```Chart 2: First six rows of the merged dataset```
 
 ```{r twob, echo=FALSE, warning=FALSE, message=FALSE, comment=NA}
 #Prints the last 6 items from the merged data.frame
 kable(tail(df, 6), row.names = FALSE) %>% kable_styling(bootstrap_options = "striped")
 ```
 
-```Chart 3: Last six rows of the dataset```
+```Chart 3: Last six rows of the merged dataset```
 
 ###Question 3 
 #####Chart 4 reports the number of NA's in each column because the data analysis yielded incomplete values. 
@@ -164,4 +164,4 @@ ggplot(data = df, aes(x = IBU, y = ABV, color=ABV)) +
 ```Chart 9: Alcohol By Volume vs International Bitterness Units of beer```
 
 ##Conclusion
-#####Based on the data above we have three recommendations. First we propose the events to be hosted in the states with the most number of breweries (Colorado [47], California [39], Michigan [32], Oregon [29], Texas [28]). As shown in Chart 1, this presents opportunities to expand services in those existing markets. The second recommendation is to host the events in the states that have the least amount of breweries (South Dakota [1], North Dakota [1], West Virgina [1]) which gives an opportunity to grow those markets. The final approach to the event selection is to host the events in the states that have the highest median IBU (Maine [61], West Virginia [57.5], Florida [55], Georgia [55], and Delaware [52]. See Chart 6.). There we will bring beer that has similar style/ABV to the local beers but with a lower IBU (tastes less bitter)  in order to gain market share.
+#####Based on the data above we have three recommendations. First we propose the events to be hosted in the states with the most number of breweries (Colorado [47], California [39], Michigan [32], Oregon [29], Texas [28]). As shown in Chart 1, this presents opportunities to expand services in those existing markets. The second recommendation is to host the events in the states that have the least amount of breweries (South Dakota [1], North Dakota [1], West Virginia [1]) which gives an opportunity to grow those markets. The final approach to the event selection is to host the events in the states that have the highest median IBU (Maine [61], West Virginia [57.5], Florida [55], Georgia [55], and Delaware [52]; see Chart 6.). There, we will bring beer that has similar style/ABV to the local beers but with a lower IBU (tastes less bitter)  in order to gain market share.

@@ -1,5 +1,5 @@
 # MSDS6306-404_CS1
-This is a probject analyzing the provided datasets (Beers.csv and Breweries.csv) which contain two lists of 2410 US craft beers across 558 US breweries.
+This is a project analyzing the provided datasets (Beers.csv and Breweries.csv) which contain two lists of 2410 US craft beers across 558 US breweries.
 
 ## csv/
 This folder contains the .csv files that are use in the 6306_CaseStudy_1.rmd file.
@@ -20,17 +20,17 @@ The instructions for this probject.
 The grading rubric for this probject.
 
 ## 6306_CaseStudy_1.html
-The output from knitting the 6306_CaseStudy_1.rmd file.
+The HTML output from knitting the 6306_CaseStudy_1.rmd file.
 
 ## 6306_CaseStudy_1.rmd
 ### Objects
-**_beers_**		The raw Beers.csv input.
+**_beers_**		The raw Beers.csv input
 
-**_brew_**		The raw Breweries.csv input.
+**_brew_**		The raw Breweries.csv input
 
 **_numBrewPerState_**	A data frame of the number of breweries per state
 
-**_beers2_**		A temporary object equivelent to 'beers' with the columns renamed for merging
+**_beers2_**		A temporary object equivalent to 'beers' with the columns renamed for merging
 
 **_df_**		The resulting dataframe from merging 'beers2' and 'brew'
 
@@ -47,3 +47,6 @@ The output from knitting the 6306_CaseStudy_1.rmd file.
 **_sumABV_**	The raw summary of 'df$ABV'
 
 **_sumABV1_**	sumABV converted to a data frame
+
+##6306_CaseStudy_1_Slides.ppt
+The presentation slide deck 
