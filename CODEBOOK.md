@@ -1,3 +1,9 @@
+##CODEBOOK.md
+This contains the file structure and objects/variables that are in this project.
+
+##README.md
+Contains a brief description of the project.
+
 ## pres/
 A folder containing the presentations for this project.
 
