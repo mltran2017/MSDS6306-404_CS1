@@ -21,5 +21,5 @@ This contains the file structure and objects/variables that are in this project.
 **FINAL:** Zackary
 
 ### Presentations
-**Individual**
+Completed Individually
 
