@@ -4,17 +4,18 @@ We have been asked to help Budweiser identify which states should host events fo
 ### CODEBOOK.md
 This contains the file structure and objects/variables that are in this project.
 
+## Workload
 ### Introduction and Conclusion
-##### DRAFT: Mai Loan
-##### REVISIONS: Zackary and Mai Loan
+**DRAFT:** Mai Loan
+**REVISIONS:** Zackary and Mai Loan
 
 ### R Code and Comments for Questions 1 through 7
-##### PRIMARY: Zackary
-##### REVISIONS: Mai Loan and Zackary
+**PRIMARY:** Zackary
+**REVISIONS:** Mai Loan and Zackary
 
 ### File Structure
-##### INITIAL: Mai Loan
-##### FINAL: Zackary
+**INITIAL:** Mai Loan
+**FINAL:** Zackary
 
 ### Presentations - Individual
 
